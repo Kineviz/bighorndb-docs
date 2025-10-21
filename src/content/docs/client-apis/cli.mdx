@@ -21,6 +21,7 @@ directory does not exist, it will be created for you.
 ```bash
 $ kuzu example.kuzu
 ```
+
 ```
 Opened the database example.kuzu in read-write mode.
 Enter ":help" for usage hints.
@@ -35,11 +36,13 @@ from your terminal:
 ```bash
 kuzu
 ```
+
 ```
 Opened the database under in-memory mode.
 Enter ":help" for usage hints.
 kuzu>
 ```
+
 ## Shell commands
 
 Once you start the shell, you can issue Cypher queries as shown in the [get started](/get-started)
@@ -74,15 +77,14 @@ If you want to launch the Kuzu CLI with a different buffer pool size, you can do
 `--defaultbpsize` or `-d` flag to the desired value in megabytes.
 :::
 
-
 To limit the buffer pool size to use just 4GB of memory, you can use the following command:
 
 ```bash
 kuzu --defaultbpsize 4096
 ```
 
-
 #### `:help`
+
 Show built-in command list within the Kuzu shell.
 
 ```
@@ -106,24 +108,31 @@ kuzu> :help
 ```
 
 #### `:clear`
+
 Clear shell. Alternatively, you can use `Ctrl + L` to clear the shell.
 
 #### `:quit`
+
 Exit from shell. Alternatively, you can use `Ctrl + D` to exit the shell.
 
 #### `:max_rows [max_rows]`
+
 Set maximum number of rows for display. 0 defaults to 20.
 
 #### `:max_width [max_width]`
+
 Set maximum width in characters for display. Defaults to terminal width if unable to display first and last columns.
 
 #### `:mode [mode]`
+
 Set output mode. The default mode is `box`. See the output modes section below for more details.
 
 #### `:stats [on|off]`
+
 Toggle query statistics on or off. The default is `on`. Query statistics include the number of tuples, columns, and execution time.
 
 #### `:multiline`
+
 Set multiline editing mode. This is the default editing mode. In multiline editing mode, you can write queries that span multiple lines. In this mode, you are able to go back
 to previous lines and edit them. Comments and newlines will stay when saved into history when using this mode.
 
@@ -140,6 +149,7 @@ kuzu> CREATE NODE TABLE
 The `‣` symbol indicates the current line.
 
 #### `:singleline`
+
 Set singleline editing mode. In singleline editing mode, you can only write queries on a single line.
 If your query spans multiple lines, you will not be able to go back to previous lines and edit them. Single-line comments and newlines
 will not be saved into history when using this mode.
@@ -155,11 +165,13 @@ kuzu> CREATE NODE TABLE
 ```
 
 #### `:highlight [on|off]`
+
 Toggle syntax highlighting on or off. The default is `on`. When enabled, the shell will highlight Cypher keywords,
 constants and literals, syntax errors, and comments. Error highlighting and multiline comment highlighting are not available in singleline mode.
 ![](/img/cli/highlighting.png)
 
 #### `:render_errors [on|off]`
+
 Toggle error highlighting on or off. The default is `on`. When enabled, the shell will highlight syntax errors in red. In particular,
 mismatched brackets and unclosed quotes will be highlighted. Error highlighting is not available in singleline mode.
 
@@ -183,7 +195,8 @@ Pipe the file content to the CLI as follows:
 ```bash
 kuzu example.kuzu < schema.cypher
 ```
-``` table
+
+```table
 Opened the database example.kuzu in read-write mode.
 Enter ":help" for usage hints.
 ┌────────────────────────────────┐
@@ -224,6 +237,7 @@ CALL progress_bar=true;
 To further configure the progress bar, see the [configuration](/cypher/configuration) section.
 
 ## Output modes
+
 The `:mode [mode]` command allows you to change the appearance of the tables returned by queries.
 To view the available modes, use the `:mode` command without any arguments:
 
@@ -258,7 +272,9 @@ The `:max_rows` and `:max_width` commands can be used to control the number of r
 of the `box`, `column`, `table`, and `markdown` output modes.
 
 ## Multi-line Cypher statements
+
 The CLI supports queries written in multiple lines. If a semicolon is omitted, hitting enter will allow you to continue the query in a newline instead of executing it.
+
 ```
 kuzu> MATCH (a:person)
     ‣ RETURN a.id;
