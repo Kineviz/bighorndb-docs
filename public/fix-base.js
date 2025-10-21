@@ -1,18 +1,17 @@
 function fixImgAndLinks() {
-  var base = "/kuzu-docs";
+  const base = "/kuzu-docs";
   document.querySelectorAll("img").forEach(function (img) {
-    // 只替换src属性（不含origin）
     if (img.hasAttribute("src")) {
-      var src = img.getAttribute("src");
-      if (src && src.startsWith("/img/")) {
+      const src = img.getAttribute("src");
+      if (src && src.startsWith("/") && !src.startsWith(base)) {
         img.setAttribute("src", base + src);
       }
     }
   });
   document.querySelectorAll("a").forEach(function (a) {
     if (a.hasAttribute("href")) {
-      var href = a.getAttribute("href");
-      if (href && href.startsWith("/img/")) {
+      const href = a.getAttribute("href");
+      if (href && href.startsWith("/") && !href.startsWith(base)) {
         a.setAttribute("href", base + href);
       }
     }
@@ -21,23 +20,14 @@ function fixImgAndLinks() {
 
 document.addEventListener("DOMContentLoaded", function () {
   fixImgAndLinks();
-  // 监听后续DOM变化，动态修正新增img/a
-  var observer = new MutationObserver(function (mutations) {
-    mutations.forEach(function (mutation) {
-      if (mutation.type === "childList") {
-        mutation.addedNodes.forEach(function (node) {
-          if (node.nodeType === 1) {
-            if (node.tagName === "IMG" || node.tagName === "A") {
-              fixImgAndLinks();
-            } else if (node.querySelectorAll) {
-              if (node.querySelectorAll("img, a").length > 0) {
-                fixImgAndLinks();
-              }
-            }
-          }
-        });
-      }
-    });
+  fixImgAndLinks();
+  const observer = new MutationObserver(function () {
+    fixImgAndLinks();
   });
-  observer.observe(document.body, { childList: true, subtree: true });
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true,
+    attributes: true,
+    characterData: true,
+  });
 });
