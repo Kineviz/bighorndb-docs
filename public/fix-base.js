@@ -1,5 +1,8 @@
 function fixImgAndLinks() {
-  const base = window.BASE_PATH || "/kuzu-docs";
+  const base = window.BASE_PATH;
+  if (!base || base === "/") {
+    return;
+  }
   document.querySelectorAll("img").forEach(function (img) {
     if (img.hasAttribute("src")) {
       const src = img.getAttribute("src");
