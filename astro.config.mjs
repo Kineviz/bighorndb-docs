@@ -9,8 +9,10 @@ const cypherGrammar = JSON.parse(
   fs.readFileSync(path.resolve("./src/styles/cypher.tmLanguage.json"), "utf8")
 );
 
-const site = "https://lixuanxian.code4demo.com";
-const base = "/kuzu-docs";
+const repoName = process.env.REPO_NAME || "kuzu-docs";
+const groupName = process.env.REPO_OWNER || "bighorndb";
+const site = `https://${groupName}.github.com`;
+const base = `/${repoName}`;
 
 process.env.ASTRO_TELEMETRY_DISABLED = "1";
 

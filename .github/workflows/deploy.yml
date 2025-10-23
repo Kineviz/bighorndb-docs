@@ -43,6 +43,8 @@ jobs:
       - name: 🏗️ Build documentation site
         run: yarn run build
         env:
+          REPO_NAME: ${{ github.event.repository.name }}
+          REPO_OWNER: ${{ github.repository_owner }}
           # Disable telemetry data collection
           ASTRO_TELEMETRY_DISABLED: 1
 
