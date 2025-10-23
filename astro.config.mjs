@@ -11,8 +11,10 @@ const cypherGrammar = JSON.parse(
 
 const repoName = process.env.REPO_NAME || "kuzu-docs";
 const groupName = process.env.REPO_OWNER || "bighorndb";
-const site = `https://${groupName}.github.com`;
+const domain = `${groupName}.github.io`;
+const site = `https://${domain}`;
 const base = `/${repoName}`;
+const docSite = `${site}${base}/`;
 
 process.env.ASTRO_TELEMETRY_DISABLED = "1";
 
@@ -24,17 +26,17 @@ export default defineConfig({
     sitemap(),
     starlight({
       favicon: "/img/favicon.ico",
-      title: "Kuzu",
+      title: repoName,
       logo: {
         light: "/src/assets/logo/kuzu-logo.png",
         dark: "/src/assets/logo/kuzu-logo-inverse.png",
         replacesTitle: true,
       },
       social: {
-        github: "https://github.com/kuzudb/kuzu",
+        github: `https://github.com/${groupName}/${repoName}`,
       },
       editLink: {
-        baseUrl: "https://github.com/kuzudb/kuzu-docs/edit/main",
+        baseUrl: `https://github.com/${groupName}/${repoName}/edit/main`,
       },
       customCss: ["./src/styles/custom.css"],
       expressiveCode: {
@@ -50,7 +52,7 @@ export default defineConfig({
         },
         {
           tag: "meta",
-          attrs: { property: "og:url", content: site },
+          attrs: { property: "og:url", content: docSite },
         },
         {
           tag: "meta",
@@ -76,11 +78,11 @@ export default defineConfig({
         },
         {
           tag: "meta",
-          attrs: { property: "twitter:domain", content: "docs.kuzudb.com" },
+          attrs: { property: "twitter:domain", content: domain },
         },
         {
           tag: "meta",
-          attrs: { property: "twitter:url", content: site },
+          attrs: { property: "twitter:url", content: docSite },
         },
         {
           tag: "meta",
@@ -105,9 +107,18 @@ export default defineConfig({
           tag: "script",
           attrs: { src: base + "/remove-prompt.js", type: "text/javascript" },
         },
+        // 注入 base 变量到全局
         {
           tag: "script",
-          attrs: { src: base + "/fix-base.js", type: "text/javascript" },
+          content: `window.BASE_PATH = '${base}';`,
+          attrs: { type: "text/javascript" },
+        },
+        {
+          tag: "script",
+          attrs: {
+            src: base + "/fix-base.js",
+            type: "text/javascript",
+          },
         },
       ],
       components: {
