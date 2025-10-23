@@ -107,7 +107,6 @@ export default defineConfig({
           tag: "script",
           attrs: { src: base + "/remove-prompt.js", type: "text/javascript" },
         },
-        // 注入 base 变量到全局
         {
           tag: "script",
           content: `window.BASE_PATH = '${base}';`,
